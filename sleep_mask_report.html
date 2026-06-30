@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Маска для сна — досье по моделям</title>
+<style>
+  :root{
+    --bg: #14181c;
+    --panel: #1b2025;
+    --panel-2: #20262c;
+    --line: #2c333a;
+    --text: #e9e6df;
+    --text-dim: #9aa3ab;
+    --accent: #c98a4b;
+    --accent-soft: rgba(201,138,75,0.12);
+    --good: #7fae8e;
+    --bad: #b96a5e;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family: 'Inter', -apple-system, Segoe UI, sans-serif;
+    line-height:1.55;
+    padding-bottom:80px;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:0 24px;}
+
+  /* HEADER */
+  header.hero{
+    border-bottom:1px solid var(--line);
+    padding:64px 0 40px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(28px,4vw,42px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    max-width:780px;
+  }
+  .hero-sub{
+    color:var(--text-dim);
+    font-size:16px;
+    max-width:620px;
+    margin-top:14px;
+  }
+  .criteria-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:28px;
+  }
+  .chip{
+    font-family:var(--mono);
+    font-size:12px;
+    border:1px solid var(--line);
+    color:var(--text-dim);
+    padding:7px 12px;
+    border-radius:3px;
+  }
+
+  /* SECTION GENERIC */
+  section{padding:56px 0; border-bottom:1px solid var(--line);}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:28px;}
+  .sec-num{font-family:var(--mono); color:var(--accent); font-size:13px;}
+  h2{font-size:22px; font-weight:600;}
+  h3{font-size:16px; font-weight:600; margin-bottom:6px;}
+  p{color:var(--text-dim); font-size:14.5px;}
+  .note{
+    font-size:13.5px;
+    color:var(--text-dim);
+    border-left:2px solid var(--accent);
+    padding:10px 16px;
+    background:var(--accent-soft);
+    margin-top:18px;
+  }
+
+  /* TLDR TABLE */
+  .tldr-table{width:100%; border-collapse:collapse; margin-top:6px;}
+  .tldr-table td{padding:14px 16px; border:1px solid var(--line); font-size:14.5px;}
+  .tldr-table td:first-child{color:var(--text-dim); width:38%;}
+  .tldr-table td:last-child{font-weight:600;}
+
+  /* PRODUCT CARD */
+  .card-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+  }
+  @media(max-width:700px){.card-grid{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .card.featured{ border-color: var(--accent); }
+  .card-img{
+    aspect-ratio: 4/3;
+    background:
+      linear-gradient(135deg, var(--panel-2) 25%, transparent 25%) -10px 0/ 20px 20px,
+      linear-gradient(225deg, var(--panel-2) 25%, transparent 25%) -10px 0/ 20px 20px,
+      linear-gradient(315deg, var(--panel-2) 25%, transparent 25%) 0px 0/ 20px 20px,
+      linear-gradient(45deg, var(--panel-2) 25%, var(--panel) 25%) 0px 0/ 20px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.04em;
+    position:relative;
+  }
+  /* Replace this <img> when photo is ready: */
+  .card-img img{
+    width:100%; height:100%; object-fit:cover; display:none; /* set display:block when src filled */
+  }
+  .card-body{padding:20px 20px 22px; display:flex; flex-direction:column; flex:1;}
+  .card-tag{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:8px;
+  }
+  .card-title{font-size:18px; font-weight:700; margin-bottom:4px;}
+  .card-sub{font-size:13px; color:var(--text-dim); margin-bottom:16px;}
+
+  .spec-list{list-style:none; margin-bottom:16px;}
+  .spec-list li{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-size:13px;
+    padding:7px 0;
+    border-top:1px solid var(--line);
+  }
+  .spec-list li:first-child{border-top:none;}
+  .spec-label{color:var(--text-dim);}
+  .spec-val{text-align:right; font-weight:500;}
+
+  .score-row{display:flex; gap:6px; margin-bottom:16px; flex-wrap:wrap;}
+  .score{
+    font-family:var(--mono);
+    font-size:11px;
+    padding:4px 8px;
+    border-radius:3px;
+    border:1px solid var(--line);
+    color:var(--text-dim);
+  }
+  .score.good{border-color:var(--good); color:var(--good);}
+  .score.mid{border-color:var(--accent); color:var(--accent);}
+
+  .pc-block{font-size:13px; margin-bottom:6px;}
+  .pc-block b{color:var(--text);}
+
+  .buy-btn{
+    margin-top:auto;
+    display:inline-block;
+    text-align:center;
+    background:var(--accent);
+    color:#1a1410;
+    font-weight:700;
+    font-size:13.5px;
+    padding:12px 18px;
+    border-radius:4px;
+    text-decoration:none;
+    letter-spacing:0.01em;
+  }
+  .buy-btn:hover{opacity:0.9;}
+  .buy-btn.placeholder{
+    background:transparent;
+    border:1px dashed var(--line);
+    color:var(--text-dim);
+  }
+
+  /* COMPARISON TABLE */
+  table.compare{width:100%; border-collapse:collapse; font-size:13.5px;}
+  table.compare th, table.compare td{
+    padding:12px 14px;
+    border:1px solid var(--line);
+    text-align:left;
+  }
+  table.compare th{
+    background:var(--panel-2);
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--text-dim);
+  }
+  table.compare td.num{font-family:var(--mono); color:var(--accent); font-weight:600;}
+
+  /* DELIVERY */
+  .delivery-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media(max-width:700px){.delivery-grid{grid-template-columns:1fr;}}
+  .delivery-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:22px;
+  }
+  .delivery-card h3{color:var(--accent); font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px;}
+  .delivery-card ul{list-style:none;}
+  .delivery-card li{
+    font-size:13.5px;
+    padding:8px 0;
+    border-top:1px solid var(--line);
+    color:var(--text-dim);
+  }
+  .delivery-card li:first-child{border-top:none;}
+  .delivery-card li b{color:var(--text); font-weight:600;}
+
+  /* FAQ */
+  .faq-item{padding:18px 0; border-top:1px solid var(--line);}
+  .faq-item:first-child{border-top:none;}
+  .faq-q{font-weight:600; font-size:14.5px; margin-bottom:6px;}
+  .faq-a{font-size:14px; color:var(--text-dim);}
+
+  footer{padding:40px 0; text-align:center;}
+  footer p{font-size:12px; color:var(--text-dim);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Досье · Маски для сна</div>
+  <h1>Выбор маски для сна: безопасность кожи, ноль давления, полный блэкаут</h1>
+  <p class="hero-sub">Сравнение моделей Manta и аналогов по четырём критериям. Только онлайн-покупка с доставкой в Белград и Рио-де-Жанейро.</p>
+  <div class="criteria-row">
+    <span class="chip">Нетоксичные материалы</span>
+    <span class="chip">Гладкая поверхность</span>
+    <span class="chip">Ноль давления на глаза</span>
+    <span class="chip">100% блокировка света</span>
+  </div>
+</header>
+
+<!-- 1. TLDR -->
+<section>
+  <div class="sec-head"><span class="sec-num">01</span><h2>Краткий вывод</h2></div>
+  <table class="tldr-table">
+    <tr><td>Баланс всех 4 критериев</td><td>Manta PRO</td></tr>
+    <tr><td>Максимальный блэкаут, бюджетнее</td><td>Manta Sleep Mask (Original)</td></tr>
+    <tr><td>Самая гладкая кожа + сертификация</td><td>Manta Silk / сторонний шёлк с OEKO-TEX</td></tr>
+  </table>
+  <div class="note">Локальных офлайн-точек продаж нет ни в Белграде, ни в Рио — все варианты ниже рассчитаны только на доставку.</div>
+</section>
+
+<!-- 2. WHY CRITERIA MATTER -->
+<section>
+  <div class="sec-head"><span class="sec-num">02</span><h2>Почему важны эти 4 критерия</h2></div>
+  <div class="card-grid">
+    <div class="card"><div class="card-body">
+      <h3>Блокировка света</h3>
+      <p>Даже точечный свет подавляет выработку мелатонина и сбивает фазы глубокого сна и REM. Зазоры у переносицы и висков — главная причина, почему «плотная ткань» не равно «полный блэкаут».</p>
+    </div></div>
+    <div class="card"><div class="card-body">
+      <h3>Давление на глаза</h3>
+      <p>Плоская маска прижимается к векам и ресницам, особенно на боку или животе. Это вызывает дискомфорт, заломы ресниц и ощущение тяжести по утрам.</p>
+    </div></div>
+    <div class="card"><div class="card-body">
+      <h3>Гладкость / травмирование кожи</h3>
+      <p>7–9 часов трения ткани о тонкую кожу век может провоцировать раздражение и заломы. Чем меньше микроворс и трение — тем безопаснее при ежедневном использовании.</p>
+    </div></div>
+    <div class="card"><div class="card-body">
+      <h3>Нетоксичность</h3>
+      <p>Кожа век — одна из самых проницаемых зон тела. Имеет значение не только тип волокна, но и подтверждённая сертификация (OEKO-TEX и аналоги), а не просто заявление бренда.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- 3. MANTA LINEUP -->
+<section>
+  <div class="sec-head"><span class="sec-num">03</span><h2>Линейка Manta</h2></div>
+
+  <div class="card-grid">
+
+    <!-- Manta PRO -->
+    <div class="card featured">
+      <div class="card-img" data-photo-slot="manta-pro">
+        ФОТО: Manta PRO
+        <img src="" alt="Manta PRO Sleep Mask">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Рекомендация №1</div>
+        <div class="card-title">Manta PRO</div>
+        <div class="card-sub">Анатомические C-чашечки + воздушный пузырь, адаптация под позу сна</div>
+        <div class="score-row">
+          <span class="score good">Кожа: 4/5</span>
+          <span class="score good">Давление: 5/5</span>
+          <span class="score good">Блэкаут: 5/5</span>
+          <span class="score mid">Сертификация: 3/5</span>
+        </div>
+        <ul class="spec-list">
+          <li><span class="spec-label">Чашечки</span><span class="spec-val">Поролон + Tactel (нейлон)</span></li>
+          <li><span class="spec-label">Ремешок</span><span class="spec-val">Перфорированный поролон + сетка</span></li>
+          <li><span class="spec-label">Сертификация</span><span class="spec-val">Не заявлена брендом явно</span></li>
+          <li><span class="spec-label">Особенность</span><span class="spec-val">Чашечка поджимается на боку, расправляется на спине</span></li>
+        </ul>
+        <div class="pc-block"><b>Плюс:</b> минимальное давление в любой позе, лучшая вентиляция в линейке.</div>
+        <div class="pc-block"><b>Минус:</b> дороже Original, нет стороннего подтверждения безопасности материала.</div>
+        <a href="#" class="buy-btn placeholder">Купить → [вставить ссылку]</a>
+      </div>
+    </div>
+
+    <!-- Manta Original -->
+    <div class="card">
+      <div class="card-img" data-photo-slot="manta-original">
+        ФОТО: Manta Sleep Mask (Original)
+        <img src="" alt="Manta Sleep Mask Original">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Базовая модель</div>
+        <div class="card-title">Manta Sleep Mask (Original)</div>
+        <div class="card-sub">O-образные чашечки, тот же принцип блэкаута, дешевле PRO</div>
+        <div class="score-row">
+          <span class="score good">Кожа: 4/5</span>
+          <span class="score good">Давление: 5/5</span>
+          <span class="score good">Блэкаут: 5/5</span>
+          <span class="score mid">Сертификация: 3/5</span>
+        </div>
+        <ul class="spec-list">
+          <li><span class="spec-label">Чашечки</span><span class="spec-val">Modal (целлюлозное волокно)</span></li>
+          <li><span class="spec-label">Ремешок</span><span class="spec-val">Поликоттон снаружи / полиэстер-велюр внутри</span></li>
+          <li><span class="spec-label">Сертификация</span><span class="spec-val">Не заявлена брендом явно</span></li>
+          <li><span class="spec-label">Особенность</span><span class="spec-val">Detachable-чашечки, фиксируются в любой точке ремешка</span></li>
+        </ul>
+        <div class="pc-block"><b>Плюс:</b> модал мягче и впитывает пот лучше синтетики, цена ниже PRO.</div>
+        <div class="pc-block"><b>Минус:</b> чашечки объёмнее, чем у PRO — часть пользователей на боку отмечает упор в подушку.</div>
+        <a href="#" class="buy-btn placeholder">Купить → [вставить ссылку]</a>
+      </div>
+    </div>
+
+    <!-- Manta Silk -->
+    <div class="card">
+      <div class="card-img" data-photo-slot="manta-silk">
+        ФОТО: Manta Silk
+        <img src="" alt="Manta Silk Sleep Mask">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Премиум-кожа</div>
+        <div class="card-title">Manta Silk</div>
+        <div class="card-sub">Та же анатомия Manta, чашечки и ремешок — из 22 momme mulberry silk</div>
+        <div class="score-row">
+          <span class="score good">Кожа: 5/5</span>
+          <span class="score good">Давление: 5/5</span>
+          <span class="score mid">Блэкаут: 4/5</span>
+          <span class="score mid">Сертификация: 3/5</span>
+        </div>
+        <ul class="spec-list">
+          <li><span class="spec-label">Материал</span><span class="spec-val">22 momme mulberry silk</span></li>
+          <li><span class="spec-label">Конструкция</span><span class="spec-val">Фирменные анатомические чашечки Manta</span></li>
+          <li><span class="spec-label">Сертификация</span><span class="spec-val">Не заявлена брендом явно</span></li>
+          <li><span class="spec-label">Цена</span><span class="spec-val">Выше Original и PRO</span></li>
+        </ul>
+        <div class="pc-block"><b>Плюс:</b> самый гладкий контакт с кожей среди линейки Manta, сохраняет анатомию посадки.</div>
+        <div class="pc-block"><b>Минус:</b> шёлк чуть тоньше — блэкаут на уровне 4/5, не 5/5 как у Original/PRO.</div>
+        <a href="#" class="buy-btn placeholder">Купить → [вставить ссылку]</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note">
+    Важно: на официальном сайте Manta нет прямого заявления о сертификации OEKO-TEX. Значок OEKO-TEX, который иногда виден на Amazon — маркировка самого листинга Amazon, а не верифицированный сертификат конкретно этой модели. Материалы (модал, нейлон, хлопок/полиэстер, шёлк) сами по себе считаются низкого риска, но документального подтверждения от бренда нет.
+  </div>
+</section>
+
+<!-- 4. ANALOGUES (EXPANDED) -->
+<section>
+  <div class="sec-head"><span class="sec-num">04</span><h2>Аналоги — расширенный разбор</h2></div>
+  <p style="margin-bottom:24px;">Конкуренты Manta делятся на 2 группы: шёлковые бренды (выигрывают по гладкости и сертификации, проигрывают по блэкауту и давлению) и медицинский поролон (баланс ближе к Manta).</p>
+
+  <div class="card-grid">
+
+    <!-- Slip -->
+    <div class="card">
+      <div class="card-img" data-photo-slot="slip">
+        ФОТО: Slip Silk Sleep Mask
+        <img src="" alt="Slip Silk Sleep Mask">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Шёлковый бренд</div>
+        <div class="card-title">Slip Silk Sleep Mask</div>
+        <div class="card-sub">Классическая плоская шёлковая маска, известна в бьюти-индустрии</div>
+        <div class="score-row">
+          <span class="score good">Кожа: 5/5</span>
+          <span class="score mid">Давление: 3/5</span>
+          <span class="score mid">Блэкаут: 3/5</span>
+          <span class="score good">Сертификация: 5/5</span>
+        </div>
+        <ul class="spec-list">
+          <li><span class="spec-label">Материал</span><span class="spec-val">100% mulberry silk, 22 momme</span></li>
+          <li><span class="spec-label">Конструкция</span><span class="spec-val">Плоская, без анатомических чашечек</span></li>
+          <li><span class="spec-label">Сертификация</span><span class="spec-val">Часто указан OEKO-TEX на странице товара</span></li>
+        </ul>
+        <div class="pc-block"><b>Плюс:</b> минимальное трение, сохраняет уход за кожей (не впитывает кремы как хлопок).</div>
+        <div class="pc-block"><b>Минус:</b> плоская форма — давит на веки и пропускает свет у переносицы.</div>
+        <a href="#" class="buy-btn placeholder">Купить → [вставить ссылку]</a>
+      </div>
+    </div>
+
+    <!-- Blissy -->
+    <div class="card">
+      <div class="card-img" data-photo-slot="blissy">
+        ФОТО: Blissy Silk Sleep Mask
+        <img src="" alt="Blissy Silk Sleep Mask">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Шёлковый бренд</div>
+        <div class="card-title">Blissy Silk Sleep Mask</div>
+        <div class="card-sub">22 momme шёлк, позиционируется как гипоаллергенный</div>
+        <div class="score-row">
+          <span class="score good">Кожа: 5/5</span>
+          <span class="score mid">Давление: 3/5</span>
+          <span class="score mid">Блэкаут: 3/5</span>
+          <span class="score good">Сертификация: 4/5</span>
+        </div>
+        <ul class="spec-list">
+          <li><span class="spec-label">Материал</span><span class="spec-val">100% mulberry silk, 22 momme</span></li>
+          <li><span class="spec-label">Конструкция</span><span class="spec-val">Плоская, регулируемый ремешок</span></li>
+          <li><span class="spec-label">Сертификация</span><span class="spec-val">Указывается на сайте бренда</span></li>
+        </ul>
+        <div class="pc-block"><b>Плюс:</b> мягкий гипоаллергенный шёлк, хорошо переносится чувствительной кожей.</div>
+        <div class="pc-block"><b>Минус:</b> та же проблема плоской конструкции — давление и засветы по краям.</div>
+        <a href="#" class="buy-btn placeholder">Купить → [вставить ссылку]</a>
+      </div>
+    </div>
+
+    <!-- Alaska Bear -->
+    <div class="card">
+      <div class="card-img" data-photo-slot="alaska-bear">
+        ФОТО: Alaska Bear Natural Silk
+        <img src="" alt="Alaska Bear Natural Silk Sleep Mask">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Шёлковый бренд · бюджетный</div>
+        <div class="card-title">Alaska Bear Natural Silk</div>
+        <div class="card-sub">Бюджетная шёлковая маска с носовой перегородкой (nose baffle)</div>
+        <div class="score-row">
+          <span class="score good">Кожа: 4/5</span>
+          <span class="score mid">Давление: 3/5</span>
+          <span class="score mid">Блэкаут: 3/5</span>
+          <span class="score mid">Сертификация: 3/5</span>
+        </div>
+        <ul class="spec-list">
+          <li><span class="spec-label">Материал</span><span class="spec-val">100% mulberry silk, 19 momme</span></li>
+          <li><span class="spec-label">Конструкция</span><span class="spec-val">Плоская, с перегородкой у носа против засвета</span></li>
+          <li><span class="spec-label">Сертификация</span><span class="spec-val">Не всегда явно указана</span></li>
+        </ul>
+        <div class="pc-block"><b>Плюс:</b> доступная цена, перегородка у носа частично решает проблему засвета.</div>
+        <div class="pc-block"><b>Минус:</b> шёлк тоньше (19 momme) — менее долговечен, давление на веки сохраняется.</div>
+        <a href="#" class="buy-btn placeholder">Купить → [вставить ссылку]</a>
+      </div>
+    </div>
+
+    <!-- Nidra -->
+    <div class="card">
+      <div class="card-img" data-photo-slot="nidra">
+        ФОТО: Nidra Deep Rest Eye Mask
+        <img src="" alt="Nidra Deep Rest Eye Mask">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Медицинский поролон</div>
+        <div class="card-title">Nidra Deep Rest Eye Mask</div>
+        <div class="card-sub">Контурный поролон с антимикробным покрытием, ближайший конкурент Manta по блэкауту</div>
+        <div class="score-row">
+          <span class="score good">Кожа: 4/5</span>
+          <span class="score good">Давление: 4/5</span>
+          <span class="score good">Блэкаут: 5/5</span>
+          <span class="score good">Сертификация: 4/5</span>
+        </div>
+        <ul class="spec-list">
+          <li><span class="spec-label">Материал</span><span class="spec-val">CertiPUR-US поролон + антимикробное покрытие</span></li>
+          <li><span class="spec-label">Конструкция</span><span class="spec-val">Контурная, защита ресниц от заломов</span></li>
+          <li><span class="spec-label">Сертификация</span><span class="spec-val">CertiPUR-US (для пены)</span></li>
+        </ul>
+        <div class="pc-block"><b>Плюс:</b> антимикробное покрытие снижает риск бактериального роста при долгом использовании.</div>
+        <div class="pc-block"><b>Минус:</b> поролон менее «дышащий», чем модал или шёлк — возможен перегрев лица.</div>
+        <a href="#" class="buy-btn placeholder">Купить → [вставить ссылку]</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 5. COMPARISON TABLE -->
+<section>
+  <div class="sec-head"><span class="sec-num">05</span><h2>Сводная таблица (1–5)</h2></div>
+  <table class="compare">
+    <tr>
+      <th>Модель</th>
+      <th>Не травмирует кожу</th>
+      <th>Не давит на глаза</th>
+      <th>Блокировка света</th>
+      <th>Подтверждённая нетоксичность</th>
+    </tr>
+    <tr><td>Manta PRO</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">3</td></tr>
+    <tr><td>Manta Original</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">3</td></tr>
+    <tr><td>Manta Silk</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">3</td></tr>
+    <tr><td>Slip Silk</td><td class="num">5</td><td class="num">3</td><td class="num">3</td><td class="num">5</td></tr>
+    <tr><td>Blissy Silk</td><td class="num">5</td><td class="num">3</td><td class="num">3</td><td class="num">4</td></tr>
+    <tr><td>Alaska Bear Silk</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num">3</td></tr>
+    <tr><td>Nidra Deep Rest</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">4</td></tr>
+  </table>
+</section>
+
+<!-- 6. DELIVERY -->
+<section>
+  <div class="sec-head"><span class="sec-num">06</span><h2>Покупка через доставку: Белград и Рио</h2></div>
+  <p style="margin-bottom:20px;">Офлайн-точек продаж Manta и аналогов нет ни в Сербии, ни в Бразилии. Все варианты — доставка.</p>
+
+  <div class="delivery-grid">
+    <div class="delivery-card">
+      <h3>Основной канал</h3>
+      <ul>
+        <li><b>mantasleep.com</b> — официальный US-магазин, отправка по всему миру</li>
+        <li>Стандартная доставка от <b>$4.99</b>, срок 7–21 рабочий день</li>
+        <li>Экспресс-доставка 2–6 дней (цена зависит от веса)</li>
+        <li>60-дневная гарантия возврата денег</li>
+        <li>Пошлины/налоги бренд не покрывает — уточнять локальные лимиты заранее</li>
+      </ul>
+    </div>
+    <div class="delivery-card">
+      <h3>Запасные каналы</h3>
+      <ul>
+        <li><b>Amazon.com / Amazon.de</b> — вся линейка Manta в наличии, доставка в Сербию обычно через пересылочные сервисы (MyUS, Bayshop и т.п.)</li>
+        <li><b>Mercado Livre / Amazon.com.br</b> — для Рио, встречаются перепродавцы Manta, цена выше из-за импортной наценки</li>
+        <li>Для Бразилии актуальна система Remessa Conforme — низкий порог беспошлинного ввоза, налог может применяться</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FAQ -->
+<section style="border-bottom:none;">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Вопросы и ответы</h2></div>
+
+  <div class="faq-item">
+    <div class="faq-q">Точно ли маска безопасна для кожи?</div>
+    <div class="faq-a">Материалы (модал, нейлон Tactel, хлопок/полиэстер, шёлк) сами по себе считаются низкого риска и широко применяются в текстиле для кожи. Прямой сторонней сертификации (OEKO-TEX) от Manta нет — это не подтверждённый факт, который можно проверить по QR-коду, а общее доверие к типу материала.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Почему анатомическая конструкция, а не плоская маска?</div>
+    <div class="faq-a">Выпуклые чашечки создают физический зазор над глазами — ткань не касается век и ресниц, в отличие от плоской маски, которая прижимается к лицу при любом движении головы.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Зачем нужен именно 100% блэкаут?</div>
+    <div class="faq-a">Даже точечный свет (через щель у носа) подавляет выработку мелатонина и может выдёргивать из глубоких фаз сна — отсюда ценность анатомической, а не просто плотной ткани маски.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Проверены ли аналоги?</div>
+    <div class="faq-a">Да. Шёлковые бренды (Slip, Blissy, Alaska Bear) дают более гладкий материал и чаще имеют явный сертификат, но конструктивно уступают по блэкауту и давлению на глаза, так как почти всегда плоские. Nidra ближе всего к Manta по балансу характеристик.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Где купить с доставкой, без оффлайна?</div>
+    <div class="faq-a">Официальный сайт mantasleep.com — самый надёжный и выгодный канал для доставки в Белград и Рио. Amazon и Mercado Livre — запасной вариант, но дороже.</div>
+  </div>
+</section>
+
+<footer>
+  <p>Источники: mantasleep.com · amazon.com · sleepdoctor.com · nidragoods.com · oeko-tex.com · sleeponlatex.com</p>
+</footer>
+
+</div>
+</body>
+</html>
